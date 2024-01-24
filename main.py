@@ -3,7 +3,7 @@ from PIL import Image # PIL : Python Image Library - Pillow
 from utils import get_limits
 
 
-yellow = [0, 255, 255]  # yellow in BGR colorspace
+yellow = [0, 255, 255] # BGR
 
 cap = cv2.VideoCapture(0)
 '''
@@ -14,26 +14,24 @@ cap = cv2.VideoCapture(0)
 
 # run loop to capture video frame
 while True:
-    ret, frame = cap.read()
+    _, frame = cap.read()
 
-    # hsvImage = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    hsvImage = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) # get all shade of yellow
 
-    # lowerLimit, upperLimit = get_limits(color=yellow)
+    lowerLimit, upperLimit = get_limits(color=yellow)
 
-    # mask = cv2.inRange(hsvImage, lowerLimit, upperLimit)
+    mask = cv2.inRange(hsvImage, lowerLimit, upperLimit)
 
-    # mask_ = Image.fromarray(mask)
+    mask_ = Image.fromarray(mask)
     
-    # print(mask_)
+    # draw border box
+    bbox = mask_.getbbox() 
+    if bbox is not None:
+        x1, y1, x2, y2 = bbox
 
-    # bbox = mask_.getbbox() # draw border box
+        frame = cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5) #draw rectangle tracking for each frame
 
-    # if bbox is not None:
-    #     x1, y1, x2, y2 = bbox
-
-    #     frame = cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5)
-
-    cv2.imshow('frame', frame)
+    cv2.imshow('frame', frame) # open frame camera
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

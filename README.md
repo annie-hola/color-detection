@@ -1,6 +1,6 @@
 # Color Detection
 
-This project uses `OpenCV` for color detection and recognition.
+This project uses `OpenCV` for color `YELLOW` detection and recognition in video capture
 
 # Installation
 
@@ -10,4 +10,4 @@ pip install -r requirements.txt
 
 # Usage
 
-python main.py --input image.jpg
+python main.py
